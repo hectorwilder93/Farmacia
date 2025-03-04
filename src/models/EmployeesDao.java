@@ -71,9 +71,8 @@ public class EmployeesDao {
 
     //Registrar empleado
     public boolean registerEmployeeQuery(Employees employee) {
-        String query = "INSERT INTO employees (id, full_name,user_name, address, telephone, email, password, rol, created, update)"
-                + "VALUES(?,?,?,?,?,?,?,?)";
-
+        String query = "INSERT INTO employees (id, full_name, username, address, telephone, email, password, rol, created,`update`)"
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Timestamp datetime = new Timestamp(new Date().getTime());
 
         try {
@@ -91,12 +90,10 @@ public class EmployeesDao {
             pst.setTimestamp(10, datetime);
             pst.execute();
             return true;
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al registrar al empleado" + e);
+            JOptionPane.showMessageDialog(null, "Error al registrar al empleado " + e);
             return false;
         }
-
     }
 
     //Listar empleado
@@ -104,7 +101,7 @@ public class EmployeesDao {
         List<Employees> list_employees = new ArrayList();
 
         String query = "SELECT * FROM employees ORDER BY rol ASC";
-        String query_search_employee = "SELECT * FROM employees WHERE id LIK '%" + value + "%'";
+        String query_search_employee = "SELECT * FROM employees WHERE id LIKE '%"+ value +"%'";
 
         try {
             conn = cn.getConnection();
@@ -135,7 +132,8 @@ public class EmployeesDao {
 
     //Modificar empleado.
     public boolean updateEmployeeQuery(Employees employee) {
-        String query = "update employees SET full_name=?, user_name=?, address=?, telephone=?, email=?, rol=?,update=?, WHERE id= ?";
+        String query = "update employees SET full_name =?, username =?, address =?, telephone =?, email =?, rol =?,`update` =?"
+                + "WHERE id =?";
 
         Timestamp datetime = new Timestamp(new Date().getTime());
 
@@ -152,9 +150,8 @@ public class EmployeesDao {
             pst.setInt(8, employee.getId());
             pst.execute();
             return true;
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al modifiar los datos del empleado" + e);
+            JOptionPane.showMessageDialog(null, "Error al modificar los datos del empleado" + e);
             return false;
         }
 
@@ -170,12 +167,12 @@ public class EmployeesDao {
             pst.execute();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No puede eliminar un empleado que tenga relación con otra tabla" + e);
+            JOptionPane.showMessageDialog(null, "No puede eliminar un empleado que tenga relación con otra tabla");
             return false;
         }
     }
 
-    //Cambiar la contarseña.
+    //Cambiar la contraseña.
     public boolean updateEmployeePassword(Employees employee) {
         String query = "UPDATE employees SET password = ? WHERE username = '" + username_user + "'";
 

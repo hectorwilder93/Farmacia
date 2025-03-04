@@ -21,7 +21,7 @@ public class CategoriesDao {
     
     //registrar categorias
     public boolean registerCategoryQuery(Categories category){
-        String query = "INSERT INTO categories (name, created, update)" + " VALUES(?,?,?)";
+        String query = "INSERT INTO categories (name, created, `update`)" + " VALUES(?,?,?)";
         Timestamp datetime = new Timestamp(new Date().getTime());
         
         try{

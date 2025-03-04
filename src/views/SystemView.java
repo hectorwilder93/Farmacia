@@ -12,7 +12,7 @@ import models.EmployeesDao;
 public class SystemView extends javax.swing.JFrame {
 
     //empleados
-    Employees employees = new Employees();
+    Employees employee = new Employees();
     EmployeesDao employeesDao = new EmployeesDao();
     public SystemView() {
         initComponents();
@@ -24,8 +24,9 @@ public class SystemView extends javax.swing.JFrame {
         SettingsControllers setting = new SettingsControllers(this);
         this.repaint();
         
-        //Contralador de empleados
-        EmployeesController employee_account = new EmployeesController(employees, employeesDao, this);
+        //Controlador de empleados
+        EmployeesController employee_account = new EmployeesController(employee, employeesDao, this);
+        employee_account.listAllEmployees();
     }
 
     /**
@@ -1794,7 +1795,7 @@ public class SystemView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Perfil", jPanel11);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 990, 590));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 990, 590));
         jTabbedPane1.getAccessibleContext().setAccessibleName("Productos");
 
         pack();
@@ -1868,11 +1869,8 @@ public class SystemView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new SystemView().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new SystemView().setVisible(true);
         });
     }
 

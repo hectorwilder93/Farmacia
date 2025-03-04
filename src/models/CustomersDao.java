@@ -21,7 +21,9 @@ public class CustomersDao {
     
     //registrar cliente
     public boolean registerCustomerquery(Customers customer){
-        String query = "INSERT INTO customers (id, full_name, address, email,telephone,created, update)" + "VALUES (?,?,?,?,?,?,?)";
+        String query = "INSERT INTO customers (id, full_name, address, email,telephone,created, `update`)"
+                + "VALUES(?,?,?,?,?,?,?)";
+                
         
         Timestamp datetime = new Timestamp (new Date().getTime());
         

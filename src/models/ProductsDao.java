@@ -20,7 +20,7 @@ public class ProductsDao {
     
     //registrar producto
     public boolean registerProductQuery(Products product){
-        String query = "INSERT INTO products (code, name, description, unit_price, update, category_id)" + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO products (code, name, description, unit_price, `update`, category_id)" + "VALUES(?, ?, ?, ?, ?, ?, ?)";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
         
