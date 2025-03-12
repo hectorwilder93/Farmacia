@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Employees;
 import models.EmployeesDao;
+import static models.EmployeesDao.id_user;
 import static models.EmployeesDao.rol_user;
 import views.SystemView;
 
@@ -34,6 +35,15 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
         this.views.btn_register_employee.addActionListener(this);
         //Botón de modificar empleado.
         this.views.btn_update_employee.addActionListener(this);
+        //Botón de eliminar empleado
+        this.views.btn_delete_employee.addActionListener(this);
+        //Boton de cancelar
+        this.views.btn_cancel_employee.addActionListener(this);
+        //Boton de cambiar contraseña
+        this.views.btn_modify_data.addActionListener(this);
+        //Colocar label empleados en escucha
+        this.views.jLabelEmployees.addMouseListener(this);
+        
         this.views.employees_table.addMouseListener(this);
         this.views.txt_search_employee.addKeyListener(this);
     }
@@ -101,6 +111,51 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
                     
                 }
             }
+        }else if(e.getSource()== views.btn_delete_employee){
+            int row = views.employees_table.getSelectedRow();
+            
+            if(row == -1){
+                JOptionPane.showMessageDialog(null,"Debes seleccionar un empelado para eliminar");
+            }else if(views.employees_table.getValueAt(row, 0).equals(id_user)){
+                JOptionPane.showMessageDialog(null,"No puede eliminar el usuario autenticado");
+            }else{
+                int id = Integer.parseInt(views.employees_table.getValueAt(row, 0).toString());
+                int question = JOptionPane.showConfirmDialog(null,"¿En realidad quieres eliminar a este empleado?");
+                
+                if(question == 0 && employeesDao.deleteEmployeeQuery(id) !=false){
+                    cleanTable();
+                   cleanFields();
+                   views.btn_register_employee.setEnabled(true);
+                   views.txt_employee_password.setEnabled(true);
+                   listAllEmployees();
+                   JOptionPane.showMessageDialog(null,"Empleado eliminado con éxito");
+                }
+            }
+        }else if(e.getSource()== views.btn_cancel_employee){
+            cleanFields();
+            views.btn_register_employee.setEnabled(true);
+            views.txt_employee_password.setEnabled(true);
+            views.txt_employee_id.setEnabled(true);
+        }else if(e.getSource()== views.btn_modify_data){
+            //recolectar información de las cajas password.
+            String password = String.valueOf(views.txt_password_modify.getPassword());
+            String confirm_password = String.valueOf(views.txt_password_modify_confirm.getPassword());
+            //verificar que las contraseñas sean iguales.
+            if(!password.equals("") && !confirm_password.equals("")){
+                if(password.equals(confirm_password)){
+                    employee.setPassword(String.valueOf(views.txt_password_modify_confirm.getPassword()));
+                    
+                    if(employeesDao.updateEmployeePassword(employee) !=false){
+                      JOptionPane.showMessageDialog(null,"Contraseña modificada con éxito");                     
+                }else{                        
+                      JOptionPane.showMessageDialog(null,"Ha ocurrido un error al modificar la contraseña");
+                    }
+                } else{
+                    JOptionPane.showMessageDialog(null,"Las contarseñas no coinciden");
+                }           
+            }else{
+                JOptionPane.showMessageDialog(null,"Todos los campos son obligatorios");
+            }
         }
     }  
     
@@ -118,8 +173,7 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
                 row[4] = list.get(i).getTelephone();
                 row[5] = list.get(i).getEmail();
                 row[6] = list.get(i).getRol();
-                model.addRow(row);
-                
+                model.addRow(row);                
             }
         }
     }
@@ -140,6 +194,20 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
            views.txt_employee_id.setEditable(false);
            views.txt_employee_password.setEnabled(false);
            views.btn_register_employee.setEnabled(false);
+       }else if(e.getSource() == views.jLabelEmployees){
+           if(rol.equals("Administrador")){
+               views.jTabbedPane1.setSelectedIndex(3);
+               //Limpiar tabla.
+               cleanTable();
+               //limpiar campos
+               cleanFields();
+               //Listar empleados
+               listAllEmployees();
+           }else{
+               views.jTabbedPane1.setEnabledAt(3, false);
+               views.jLabelEmployees.setEnabled(false);
+               JOptionPane.showMessageDialog(null, "No tienes privilegios de administardor para acceder a esta vista");
+           }
        }
     }
 

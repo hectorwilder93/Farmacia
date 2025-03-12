@@ -110,5 +110,9 @@ public class CustomersDao {
             return false;
         }
     }
+
+    public boolean registerCustomerQuery(Customers customer) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
