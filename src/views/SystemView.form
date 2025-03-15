@@ -1948,8 +1948,8 @@
                       <Table columnCount="5" rowCount="0">
                         <Column editable="false" title="Identificaci&#xf3;n" type="java.lang.Object"/>
                         <Column editable="false" title="Nombre" type="java.lang.Object"/>
+                        <Column editable="false" title="Direcci&#xf3;n" type="java.lang.Object"/>
                         <Column editable="false" title="Tel&#xe9;fono" type="java.lang.Object"/>
-                        <Column editable="true" title="Direcci&#xf3;n" type="java.lang.Object"/>
                         <Column editable="false" title="Correo" type="java.lang.Object"/>
                       </Table>
                     </Property>
