@@ -21,7 +21,7 @@ public class CustomersDao {
     
     //registrar cliente
     public boolean registerCustomerquery(Customers customer){
-        String query = "INSERT INTO customers (id, full_name, address, email,telephone,created, `update`)"
+        String query = "INSERT INTO customers (id, full_name, address, telephone, email, created, `update`)"
                 + "VALUES(?,?,?,?,?,?,?)";
                 
         
@@ -64,6 +64,7 @@ public class CustomersDao {
             customer.setId(rs.getInt("id"));
             customer.setFull_name(rs.getString("full_name"));
             customer.setAddress(rs.getString("address"));
+            customer.setTelephone(rs.getString("telephone"));
             customer.setEmail(rs.getString("email"));
             list_customers.add(customer);
            }           
@@ -75,7 +76,8 @@ public class CustomersDao {
     
     //MOdificar cliente
     public boolean updateCustomerquery(Customers customer){
-        String query = "update customers set full_name = ?, address = ?, email = ?, telephone = ?, update = ?" + "WHERE id = ? ";
+        String query = "UPDATE customers SET full_name = ?,address = ?,telephone = ?,email = ?,`update` = ?"
+                +  "WHERE id = ? ";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
         

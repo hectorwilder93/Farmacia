@@ -19,10 +19,10 @@ public class SupplierDao {
     PreparedStatement pst;
     ResultSet rs;
     
-    //Registrar proveedor
-    
+    //Registrar proveedor    
     public boolean registerSupplierQuery(Suppliers supplier){
-        String query = "INSERT INTO suppliers (name, description, address, telephone, email, city, created, update)" + "VALUES(?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO suppliers(name,description,telephone,address,email,city,created,updated)"
+                + "VALUES(?,?,?,?,?,?,?,?)";
         
         Timestamp datetime = new Timestamp(new Date().getTime());
         
@@ -32,16 +32,14 @@ public class SupplierDao {
             
             pst.setString(1, supplier.getName());
             pst.setString(2, supplier.getDescription());
-            pst.setString(3, supplier.getAddress());
-            pst.setString(4, supplier.getTelephone());
+            pst.setString(3, supplier.getTelephone());
+            pst.setString(4, supplier.getAddress());           
             pst.setString(5, supplier.getEmail());
             pst.setString(6, supplier.getCity());
             pst.setTimestamp(7, datetime);
             pst.setTimestamp(8, datetime);
             pst.execute();
-            return true;
-            
-            
+            return true;            
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error al registrar a el proveedor");
             return false;
@@ -52,7 +50,7 @@ public class SupplierDao {
     public List listSuppliersQuery(String value){
         List<Suppliers> list_suppliers = new ArrayList();
         String query = "SELECT * FROM suppliers";
-        String query_search_supplier = "SELECT * FROM suppliers WHERE name LIKE '" + value + "%'";
+        String query_search_supplier = "SELECT * FROM suppliers WHERE name LIKE '%" + value + "%'";
         
         try{
             conn = cn.getConnection();
@@ -68,8 +66,8 @@ public class SupplierDao {
             supplier.setId(rs.getInt("id"));
             supplier.setName(rs.getString("name"));
             supplier.setDescription(rs.getString("description"));
-            supplier.setAddress(rs.getString("address"));
             supplier.setTelephone(rs.getString("telephone"));
+            supplier.setAddress(rs.getString("address"));            
             supplier.setEmail(rs.getString("email"));
             supplier.setCity(rs.getString("city"));
             list_suppliers.add(supplier);
@@ -83,7 +81,7 @@ public class SupplierDao {
     
     //modificar proveedor
      public boolean updateSupplierQuery(Suppliers supplier){
-        String query = "update suppliers SET name=?, description=?, address=?, telephone=?, email=?, city=?, update=? WHERE id=?";
+        String query = "UPDATE suppliers SET name=?, description=?,telephone=?, address=?,  email=?, city=?, `updated=?` WHERE id=?";
         
         Timestamp datetime = new Timestamp(new Date().getTime());
         
@@ -93,18 +91,17 @@ public class SupplierDao {
             
             pst.setString(1, supplier.getName());
             pst.setString(2, supplier.getDescription());
-            pst.setString(3, supplier.getAddress());
-            pst.setString(4, supplier.getTelephone());
+            pst.setString(3, supplier.getTelephone());
+            pst.setString(4, supplier.getAddress());
             pst.setString(5, supplier.getEmail());
             pst.setString(6, supplier.getCity());
             pst.setTimestamp(7, datetime);
             pst.setInt(8, supplier.getId());
             pst.execute();
-            return true;
-            
+            return true;            
             
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error al modificar del proveedor");
+            JOptionPane.showMessageDialog(null, "Error al modificar los datos del proveedor");
             return false;
         }
     }

@@ -106,7 +106,7 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
                         views.btn_register_employee.setEnabled(true);
                         JOptionPane.showMessageDialog(null,"Datos del empleado modficados con éxito");
                     }else{
-                        JOptionPane.showMessageDialog(null,"Ha ocurriod un error al modificar al empleado");
+                        JOptionPane.showMessageDialog(null,"Ha ocurrido un error al modificar al empleado");
                     }
                     
                 }

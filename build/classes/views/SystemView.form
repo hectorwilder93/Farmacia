@@ -1798,6 +1798,11 @@
                     </Property>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JTextField" name="txt_customer_telephone">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel22">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1814,11 +1819,6 @@
                       <Dimension value="[143, 17]"/>
                     </Property>
                   </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="txt_customer_telephone">
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_customer_email">
                   <AuxValues>
@@ -1949,8 +1949,8 @@
                         <Column editable="false" title="Identificaci&#xf3;n" type="java.lang.Object"/>
                         <Column editable="false" title="Nombre" type="java.lang.Object"/>
                         <Column editable="false" title="Direcci&#xf3;n" type="java.lang.Object"/>
-                        <Column editable="false" title="Tel&#xe9;fono" type="java.lang.Object"/>
-                        <Column editable="false" title="Correo" type="java.lang.Object"/>
+                        <Column editable="false" title="telefono" type="java.lang.Object"/>
+                        <Column editable="false" title="email" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

@@ -4,12 +4,15 @@ package views;
 import controllers.CustomerController;
 import controllers.EmployeesController;
 import controllers.SettingsControllers;
+import controllers.SuppliersController;
 import models.Customers;
 import models.CustomersDao;
 import models.Employees;
 import models.EmployeesDao;
 import static models.EmployeesDao.full_name_user;
 import static models.EmployeesDao.rol_user;
+import models.SupplierDao;
+import models.Suppliers;
 
 
 
@@ -22,6 +25,9 @@ public class SystemView extends javax.swing.JFrame {
     //Clientes
     Customers customer = new Customers();
     CustomersDao customersDao = new CustomersDao();
+    //proveedor
+    Suppliers supplier = new Suppliers();
+    SupplierDao suppliersDao = new SupplierDao();
     public SystemView() {
         initComponents();
         setSize(1208, 680);
@@ -40,6 +46,9 @@ public class SystemView extends javax.swing.JFrame {
         //Controlador de clientes
         CustomerController customer_account = new CustomerController(customer, customersDao, this);
         customer_account.listAllCustomers();
+        
+        //Controlador de proveedores
+        SuppliersController supplier_account = new SuppliersController(supplier, suppliersDao, this);
     }
     
     public String titleInterface(){
@@ -150,8 +159,8 @@ public class SystemView extends javax.swing.JFrame {
         txt_customer_fullname = new javax.swing.JTextField();
         txt_customer_address = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         txt_customer_telephone = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
         txt_customer_email = new javax.swing.JTextField();
         btn_register_customer = new javax.swing.JButton();
         btn_update_customer = new javax.swing.JButton();
@@ -1113,7 +1122,7 @@ public class SystemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificación", "Nombre", "Dirección", "Teléfono", "Correo"
+                "Identificación", "Nombre", "Dirección", "telefono", "email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
