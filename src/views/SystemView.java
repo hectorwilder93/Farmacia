@@ -49,6 +49,7 @@ public class SystemView extends javax.swing.JFrame {
         
         //Controlador de proveedores
         SuppliersController supplier_account = new SuppliersController(supplier, suppliersDao, this);
+        supplier_account.listAllSupplier();
     }
     
     public String titleInterface(){
