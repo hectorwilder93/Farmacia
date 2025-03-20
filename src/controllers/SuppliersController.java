@@ -35,8 +35,13 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         this.views.btn_register_supplier.addActionListener(this);
         //Botón de modificar proveedor
         this.views.btn_update_supplier.addActionListener(this);
+        //Botón de eliminar proveedores
+        this.views.btn_delete_supplier.addActionListener(this);
+        //Botón de cancelar
+        this.views.btn_cancel_supplier.addActionListener(this);
         this.views.supplier_table.addMouseListener(this);
         this.views.txt_search_supplier.addKeyListener(this);
+        this.views.jLabelSuppliers.addMouseListener(this);
     }
 
     @Override
@@ -58,10 +63,13 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
                 supplier.setAddress(views.txt_supplier_address.getText().trim());
                 supplier.setEmail(views.txt_supplier_email.getText().trim());
                 supplier.setCity(views.cmb_supplier_city.getSelectedItem().toString());
+                supplier.setId(Integer.parseInt(views.txt_supplier_id.getText()));
 
                 if (supplierDao.registerSupplierQuery(supplier)) {
                     //Limpiar la tabla
                     cleanTable();
+                    //Limpiar campos
+                    cleanFields();
                     //Listar la tabla
                     listAllSupplier();
                     JOptionPane.showMessageDialog(null, "Proveedor registrado exitosamente");
@@ -71,20 +79,21 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
             }
         } else if (e.getSource() == views.btn_update_supplier) {
             if (views.txt_supplier_id.equals("")) {
-                JOptionPane.showMessageDialog(null, "Selleciona una fila para continuar");
-            } else {
+                JOptionPane.showMessageDialog(null,"Selecciona una fila para continuar");
+             }else{
                 if (views.txt_supplier_name.getText().equals("")
-                        || views.txt_supplier_telephone.getText().equals("")
-                        || views.txt_supplier_address.getText().equals("")
+                        || views.txt_supplier_address.getText().equals("") 
+                        || views.txt_supplier_telephone.getText().equals("")                                                                      
                         || views.txt_supplier_email.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
                 } else {
                     supplier.setName(views.txt_supplier_name.getText().trim());
-                    supplier.setDescription(views.txt_supplier_description.getText().trim());
-                    supplier.setTelephone(views.txt_supplier_telephone.getText().trim());
+                    supplier.setDescription(views.txt_supplier_description.getText().trim());                     
                     supplier.setAddress(views.txt_supplier_address.getText().trim());
+                    supplier.setTelephone(views.txt_supplier_telephone.getText().trim());
                     supplier.setEmail(views.txt_supplier_email.getText().trim());
                     supplier.setCity(views.cmb_supplier_city.getSelectedItem().toString());
+                    supplier.setId(Integer.parseInt(views.txt_supplier_id.getText()));
                     
                     if (supplierDao.updateSupplierQuery(supplier)) {
                         //Limpiar la tabla
@@ -93,12 +102,34 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
                         cleanFields();
                         //Listar proveedores
                         listAllSupplier();
-                        JOptionPane.showMessageDialog(null, "Datos del proveedor registrados con éxito");
+                        views.btn_register_supplier.setEnabled(true);
+                        JOptionPane.showMessageDialog(null, "Datos del proveedor modificados con éxito");
                     } else {
                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error al modificar los datos del proveedor");
                     }
                 }
+            } 
+        }else if(e.getSource() == views.btn_delete_supplier){
+            int row = views.supplier_table.getSelectedRow();
+            if(row == -1){
+                JOptionPane.showMessageDialog(null, "Debes seleecionar un proveedor para eliminar");
+            }else{
+                int id = Integer.parseInt(views.supplier_table.getValueAt(row, 0).toString());
+                int question = JOptionPane.showConfirmDialog(null, "¿En realidad quieres eliminar este proveedor?");
+                if(question == 0 && supplierDao.deleteSupplierQuery(id) != false){
+                    //Limpar tabla
+                    cleanTable();
+                    //Limpiar campos
+                    cleanFields();
+                    //Listar proveedores
+                    listAllSupplier();
+                     JOptionPane.showMessageDialog(null, "Proveedor eliminado con exito");
+                }
             }
+        }else if(e.getSource() == views.btn_cancel_supplier){
+            //Limpiar los campos
+            cleanFields();
+            views.btn_register_supplier.setEnabled(true);
         }
     }
     
@@ -136,6 +167,20 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
             //deshabilitar botones
             views.btn_register_supplier.setEnabled(false);
             views.txt_supplier_id.setEditable(false);
+        }else if(e.getSource() == views.jLabelSuppliers){
+            if(rol.equals("Administrador")){
+                views.jTabbedPane1.setSelectedIndex(4);
+                //Limpiar tabla
+                cleanTable();
+                //Limpiar campos
+                cleanFields();
+                //Listar proveedores
+                listAllSupplier();
+            }else{
+                views.jTabbedPane1.setEnabledAt(4, false);
+                views.jLabelSuppliers.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "No tienes privilegios de administrador para acceder a esta vista");
+            }        
         }
     }
 
@@ -190,8 +235,8 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         views.txt_supplier_id.setEditable(true);
         views.txt_supplier_name.setText("");
         views.txt_supplier_description.setText("");
-        views.txt_supplier_telephone.setText("");
         views.txt_supplier_address.setText("");
+        views.txt_supplier_telephone.setText("");        
         views.txt_supplier_email.setText("");
         views.cmb_supplier_city.setSelectedIndex(0);        
     }

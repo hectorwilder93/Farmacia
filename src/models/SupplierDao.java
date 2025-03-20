@@ -81,7 +81,7 @@ public class SupplierDao {
     
     //modificar proveedor
      public boolean updateSupplierQuery(Suppliers supplier){
-        String query = "UPDATE suppliers SET name=?, description=?,telephone=?, address=?,  email=?, city=?, `updated=?` WHERE id=?";
+        String query = "UPDATE suppliers SET name=?, description=?,telephone=?, address=?,  email=?, city=?, updated=? WHERE id=?";
         
         Timestamp datetime = new Timestamp(new Date().getTime());
         
@@ -101,7 +101,7 @@ public class SupplierDao {
             return true;            
             
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error al modificar los datos del proveedor");
+            JOptionPane.showMessageDialog(null, "HHHError al modificar los datos del proveedor");
             return false;
         }
     }
