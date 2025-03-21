@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 import models.Categories;
 import models.CategoriesDao;
 import static models.EmployeesDao.rol_user;
@@ -22,13 +22,16 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
     private CategoriesDao categoryDao;
     private SystemView views;
     String rol = rol_user;
+    DefaultTableModel model = new DefaultTableModel();
 
     public CategoriesController(Categories category, CategoriesDao categoryDao, SystemView views) {
         this.category = category;
         this.categoryDao = categoryDao;
         this.views = views;
-        //Botón de registra categoria
+        //Botón de registrar categoria
         this.views.btn_register_category.addActionListener(this);
+        //Boton de modificar categoria
+        this.views.btn_update_category.addActionListener(this);
         this.views.category_table.addMouseListener(this);
         this.views.txt_search_category.addKeyListener(this);
     }
@@ -37,16 +40,36 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == views.btn_register_category) {
             if (views.txt_category_name.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Todos los cmapos son obligatorios");
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
             } else {
                 category.setName(views.txt_category_name.getText().trim());
 
                 if (categoryDao.registerCategoryQuery(category)) {
                     cleanTable();
+                    cleanFields();
                     listAllCategories();
                     JOptionPane.showMessageDialog(null, "Categoría registrada con éxito");
                 } else {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar la categoría");
+                }
+            }
+        }else if(e.getSource() == views.btn_update_category){
+            if(views.txt_category_id.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Selecciona una fila para continuar");
+            }else{
+                if(views.txt_category_id.getText().equals("")
+                    ||views.txt_category_name.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+            }else{
+                    category.setId(Integer.parseInt(views.txt_category_id.getText()));
+                    category.setName(views.txt_category_name.getText().trim());
+                    
+                    if(categoryDao.updateCategoryQuery(category)){
+                        cleanTable();
+                        cleanFields();
+                        views.btn_register_category.setEnabled(true);
+                        listAllCategories();
+                    }
                 }
             }
         }
@@ -54,15 +77,17 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
 
     //Listar categorias
     public void listAllCategories() {
-        List<Categories> list = categoryDao.listCategoriesQuery(views.txt_search_category.getText());
-        TableModel model = views.category_table.getModel();
-        Object[] row = new Object[2];
-        for (int i = 0; i < list.size(); i++) {
-            row[0] = list.get(i).getId();
-            row[1] = list.get(i).getName();
-       
+        if (rol.equals("Administrador")) {
+            List<Categories> list = categoryDao.listCategoriesQuery(views.txt_search_category.getText());
+            model = (DefaultTableModel) views.category_table.getModel();
+            Object[] row = new Object[2];
+            for (int i = 0; i < list.size(); i++) {
+                row[0] = list.get(i).getId();
+                row[1] = list.get(i).getName();
+                model.addRow(row);
+            }
+            views.category_table.setModel(model);
         }
-        views.category_table.setModel(model);
     }
 
     @Override
@@ -72,9 +97,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
             views.txt_category_id.setText(views.category_table.getValueAt(row, 0).toString());
             views.txt_category_name.setText(views.category_table.getValueAt(row, 1).toString());
             views.btn_register_category.setEnabled(false);
-
         }
-
     }
 
     @Override
@@ -117,10 +140,16 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
         }
     }
 
-    public void cleanTable() {
-        for (int i = 0; i < model.getRowCount(); i++) {
+    public void cleanTable(){
+        for(int i= 0; i<model.getRowCount(); i++){
             model.removeRow(i);
-            i = i - 1;
+            i = i -1;
         }
+    } 
+    
+    public void cleanFields(){
+        views.txt_category_id.setText("");
+        views.txt_category_name.setText("");
     }
+   
 }

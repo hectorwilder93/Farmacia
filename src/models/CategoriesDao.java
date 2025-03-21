@@ -21,7 +21,7 @@ public class CategoriesDao {
     
     //registrar categorias
     public boolean registerCategoryQuery(Categories category){
-        String query = "INSERT INTO categories (name, created, `update`)" + " VALUES(?,?,?)";
+        String query = "INSERT INTO categories name, created, updated VALUES(?,?,?)";
         Timestamp datetime = new Timestamp(new Date().getTime());
         
         try{
@@ -33,19 +33,19 @@ public class CategoriesDao {
             pst.execute();
             return true;
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error al registrar la cetegoria");
+            JOptionPane.showMessageDialog(null,"Error al registrar la categoria");
             return false;
         }
     }
     
     //Listar categorias
-   public List listCategoriesQuery(String value){
-       List<Categories> list_categories = new ArrayList();
-       String query = "SELECT * FROM categories";
-       String query_search_category = "SELECT * FROM categories WHERE name LIKE '%" + value + "%'";
-       
-       try{
-           conn = cn.getConnection();
+    public List listCategoriesQuery(String value) {
+        List<Categories> list_categories = new ArrayList();
+        String query = "SELECT * FROM categories";
+        String query_search_category = "SELECT * FROM categories WHERE name LIKE '%" + value + "%'";
+
+        try {
+            conn = cn.getConnection();
             if (value.equalsIgnoreCase("")) {
                 pst = conn.prepareStatement(query);
                 rs = pst.executeQuery();
@@ -53,24 +53,23 @@ public class CategoriesDao {
                 pst = conn.prepareStatement(query_search_category);
                 rs = pst.executeQuery();
             }
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Categories category = new Categories();
                 category.setId(rs.getInt("id"));
                 category.setName(rs.getString("name"));
                 list_categories.add(category);
-                
-                
+
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
-       }
-       return list_categories;
-   } 
+        }
+        return list_categories;
+    } 
    
    //modificar categoria
     public boolean updateCategoryQuery(Categories category){
-        String query = "update categories SET name = ?, update=? WHERE id= ?";
+        String query = "UPDATE categories SET name = ?, updated=? WHERE id= ?";
         Timestamp datetime = new Timestamp(new Date().getTime());
         
         try{
@@ -82,7 +81,7 @@ public class CategoriesDao {
             pst.execute();
             return true;
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error al modifcar los datos de la cetegoria");
+            JOptionPane.showMessageDialog(null,"Error al modifcar los datos de la categoria");
             return false;
         }
     }
