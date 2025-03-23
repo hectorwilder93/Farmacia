@@ -151,7 +151,7 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
                       JOptionPane.showMessageDialog(null,"Ha ocurrido un error al modificar la contraseña");
                     }
                 } else{
-                    JOptionPane.showMessageDialog(null,"Las contarseñas no coinciden");
+                    JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden");
                 }           
             }else{
                 JOptionPane.showMessageDialog(null,"Todos los campos son obligatorios");

@@ -5,16 +5,16 @@ public class Categories {
     private int id;
     private String name;
     private String created;
-    private String updated;
+    private String update;
 
     public Categories() {
     }
 
-    public Categories(int id, String name, String created, String updated) {
+    public Categories(int id, String name, String created, String update) {
         this.id = id;
         this.name = name;
         this.created = created;
-        this.updated = updated;
+        this.update = update;
     }
 
     public int getId() {
@@ -42,11 +42,11 @@ public class Categories {
     }
 
     public String getUpdate() {
-        return updated;
+        return update;
     }
 
     public void setUpdate(String update) {
-        this.updated = update;
+        this.update = update;
     }
     
     

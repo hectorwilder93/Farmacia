@@ -12,7 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Categories;
 import models.CategoriesDao;
+import models.DynamicCombobox;
 import static models.EmployeesDao.rol_user;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import views.SystemView;
 
 
@@ -32,8 +34,15 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
         this.views.btn_register_category.addActionListener(this);
         //Boton de modificar categoria
         this.views.btn_update_category.addActionListener(this);
+        //Botón de eliminar categoria
+        this.views.btn_delete_category.addActionListener(this);
+        //Botón de cancelar
+        this.views.btn_cancel_category.addActionListener(this);
         this.views.category_table.addMouseListener(this);
         this.views.txt_search_category.addKeyListener(this);
+        this.views.jLabelCategories.addMouseListener(this);
+        getCategoryName();
+        AutoCompleteDecorator.decorate(views.cmb_product_category);
     }
 
     @Override
@@ -72,6 +81,26 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
                     }
                 }
             }
+        }else if(e.getSource() == views.btn_delete_category){
+            int row = views.category_table.getSelectedRow();
+            if(row == -1){
+               JOptionPane.showMessageDialog(null, "Debes seleecionar una categoría para eliminarla"); 
+            }else{
+                int id = Integer.parseInt(views.category_table.getValueAt(row, 0).toString());
+                int question = JOptionPane.showConfirmDialog(null,"¿En realidad quieres eliminar esta categoría?");
+                
+                if(question == 0 && categoryDao.deleteCategoryQuery(id) !=false){
+                    cleanTable();
+                   cleanFields();
+                   views.btn_register_category.setEnabled(true);
+                   listAllCategories();
+                   JOptionPane.showMessageDialog(null,"Categoría eliminada con éxito");
+                }  
+            }
+        }else if(e.getSource() == views.btn_cancel_category){
+            cleanFields();
+            views.btn_register_category.setEnabled(true);
+            
         }
     }
 
@@ -97,6 +126,17 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
             views.txt_category_id.setText(views.category_table.getValueAt(row, 0).toString());
             views.txt_category_name.setText(views.category_table.getValueAt(row, 1).toString());
             views.btn_register_category.setEnabled(false);
+        }else if(e.getSource() == views.jLabelCategories){
+            if(rol.equals("Administrador")){
+                views.jTabbedPane1.setSelectedIndex(5);
+                cleanTable();
+                cleanFields();
+                listAllCategories();
+            }else{
+                views.jTabbedPane1.setEnabledAt(5, true);
+                views.jLabelCategories.setEnabled(false);
+                JOptionPane.showMessageDialog(null,"No tiene privilegios de administrador para acceder a esta vista");
+            }
         }
     }
 
@@ -150,6 +190,15 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
     public void cleanFields(){
         views.txt_category_id.setText("");
         views.txt_category_name.setText("");
+    }
+    
+    public void getCategoryName(){
+        List<Categories> list = categoryDao.listCategoriesQuery(views.txt_search_category.getText());
+        for(int i = 0; i< list.size(); i++){
+            int id = list.get(i).getId();
+            String name= list.get(i).getName();
+            views.cmb_product_category.addItem(new DynamicCombobox(id, name));
+        }
     }
    
 }

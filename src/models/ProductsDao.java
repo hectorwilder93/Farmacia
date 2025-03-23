@@ -20,7 +20,8 @@ public class ProductsDao {
     
     //registrar producto
     public boolean registerProductQuery(Products product){
-        String query = "INSERT INTO products (code, name, description, unit_price, `update`, category_id)" + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO products (code, name, description, unit_price, created, `update`, category_id)"
+                + "VALUES(?, ?, ?, ?, ?, ?, ?)";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
         
@@ -32,11 +33,12 @@ public class ProductsDao {
             pst.setString(3, product.getDescription());
             pst.setDouble(4, product.getUnit_price());
             pst.setTimestamp(5, datetime);
-            pst.setString(6, product.getCategory_name());
+            pst.setTimestamp(6, datetime);
+            pst.setInt(7, product.getCategory_id());
             pst.execute();
             return true;
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error alregistrar el producto");
+            JOptionPane.showMessageDialog(null, "Error al registrar el producto");
             return false;
         }
     }
@@ -76,7 +78,7 @@ public class ProductsDao {
     
     //Modificar producto
     public boolean updateProductQuery(Products product){
-        String query = "update products SET code = ?, name = ?, description = ?, unit_price = ?, update = ?, category_id = ? WHERE id = ?";
+        String query = "UPDATE products SET code = ?, name = ?, description = ?, unit_price = ?,`update` = ?, category_id = ? WHERE id = ?";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
         
@@ -116,7 +118,7 @@ public class ProductsDao {
     //Buscar productos
     public Products searchProduct(int id){
         String query = "SELECT pro.*,ca.name AS category_name FROM products pro "
-                + "INNER JOIN categories ca ON pro.category_id = ca.id WHERE pro:id = ?";
+                + "INNER JOIN categories ca ON pro.category_id = ca.id WHERE pro.id = ?";
         
         Products product = new Products();
         

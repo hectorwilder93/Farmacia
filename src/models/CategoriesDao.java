@@ -21,7 +21,7 @@ public class CategoriesDao {
     
     //registrar categorias
     public boolean registerCategoryQuery(Categories category){
-        String query = "INSERT INTO categories name, created, updated VALUES(?,?,?)";
+        String query = "INSERT INTO categories (name, created, `update`) VALUES(?,?,?)";
         Timestamp datetime = new Timestamp(new Date().getTime());
         
         try{
@@ -33,7 +33,7 @@ public class CategoriesDao {
             pst.execute();
             return true;
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error al registrar la categoria");
+            JOptionPane.showMessageDialog(null,"HEEEEEError al registrar la categoria");
             return false;
         }
     }
@@ -69,7 +69,7 @@ public class CategoriesDao {
    
    //modificar categoria
     public boolean updateCategoryQuery(Categories category){
-        String query = "UPDATE categories SET name = ?, updated=? WHERE id= ?";
+        String query = "UPDATE categories SET name = ?, `update`=? WHERE id= ?";
         Timestamp datetime = new Timestamp(new Date().getTime());
         
         try{
