@@ -71,6 +71,7 @@ public class SystemView extends javax.swing.JFrame {
         
         //controlador de productos
         ProductsController product_section = new ProductsController(product, productDao, this);
+        product_section.listAllProducts();
     }
     
     public String titleInterface(){

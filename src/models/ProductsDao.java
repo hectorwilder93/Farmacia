@@ -47,8 +47,7 @@ public class ProductsDao {
     public List listProductsQuery(String value){
         List<Products> list_products = new ArrayList();
         String query = "SELECT pro.*,ca.name AS category_name FROM products pro, categories ca WHERE pro.category_id = ca.id";
-        String query_search_product = "SELECT pro.*, ca.name AS category_name FROM products pro INNER JOIN categories ca"
-                + "ON pro.category_id = ca.id WHERE pro.name LIKE '%" + value + "%'";
+        String query_search_product = "SELECT pro.*, ca.name AS category_name FROM products pro INNER JOIN categories ca ON pro.category_id = ca.id WHERE pro.name LIKE '%" + value + "%'";
         
         try{
             conn = cn.getConnection();
@@ -64,7 +63,7 @@ public class ProductsDao {
             product.setId(rs.getInt("id"));
             product.setCode(rs.getInt("code"));
             product.setName(rs.getString("name"));
-            product.setDescription(rs.getString("descritpion"));
+            product.setDescription(rs.getString("description"));
             product.setUnit_price(rs.getDouble("unit_price"));
             product.setProduct_quantity(rs.getInt("product_quantity"));
             product.setCategory_name(rs.getString("category_name"));
@@ -132,7 +131,7 @@ public class ProductsDao {
                 product.setId(rs.getInt("id"));
                 product.setCode(rs.getInt("code"));
                 product.setName(rs.getString("name"));
-                product.setDescription(rs.getString("descrption"));
+                product.setDescription(rs.getString("description"));
                 product.setUnit_price(rs.getDouble("unit_price"));
                 product.setCategory_id(rs.getInt("category_id"));
                 product.setCategory_name(rs.getString("category_name"));
