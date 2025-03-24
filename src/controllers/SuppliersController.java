@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.DynamicCombobox;
 import static models.EmployeesDao.rol_user;
 
 
@@ -18,7 +19,7 @@ import models.Suppliers;
 import views.SystemView;
 
 
-public class SuppliersController implements ActionListener, MouseListener, KeyListener{
+public final class SuppliersController implements ActionListener, MouseListener, KeyListener{
     private Suppliers supplier;
     private SupplierDao supplierDao;
     private SystemView views;
@@ -42,6 +43,7 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         this.views.supplier_table.addMouseListener(this);
         this.views.txt_search_supplier.addKeyListener(this);
         this.views.jLabelSuppliers.addMouseListener(this);
+        getSupplierName();
     }
 
     @Override
@@ -112,7 +114,7 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         }else if(e.getSource() == views.btn_delete_supplier){
             int row = views.supplier_table.getSelectedRow();
             if(row == -1){
-                JOptionPane.showMessageDialog(null, "Debes seleecionar un proveedor para eliminar");
+                JOptionPane.showMessageDialog(null, "Debes seleccionar un proveedor para eliminar");
             }else{
                 int id = Integer.parseInt(views.supplier_table.getValueAt(row, 0).toString());
                 int question = JOptionPane.showConfirmDialog(null, "¿En realidad quieres eliminar este proveedor?");
@@ -239,6 +241,16 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         views.txt_supplier_telephone.setText("");        
         views.txt_supplier_email.setText("");
         views.cmb_supplier_city.setSelectedIndex(0);        
+    }
+    
+    //Metodo para mostrar el nombre del proveedor.
+     public void getSupplierName(){
+        List<Suppliers> list = supplierDao.listSuppliersQuery(views.txt_search_supplier.getText());
+        for(int i = 0; i< list.size(); i++){
+            int id = list.get(i).getId();
+            String name= list.get(i).getName();
+            views.cmb_purchase_supplier.addItem(new DynamicCombobox(id, name));
+        }
     }
     
 }

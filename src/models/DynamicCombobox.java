@@ -30,7 +30,6 @@ public class DynamicCombobox {
     @Override
     public String toString(){
         return this.getName();
-    }
-    
+    }   
     
 }
