@@ -57,7 +57,7 @@ public class PurchasesController implements KeyListener, ActionListener{
                     String product_name = views.txt_purchase_product_name.getText();
                     double price = Double.parseDouble(views.txt_purchase_price.getText());
                     int purchase_id = Integer.parseInt(views.txt_purchase_id.getText());
-                    String supplier_name = views.cmb_purchase_supplier.getSelectedItem().toString();
+                    String supplier_name =  views.cmb_purchase_supplier.getSelectedItem().toString();
                     
                     if(amount > 0){
                         temp = (DefaultTableModel) views.purchases_table.getModel();
@@ -85,7 +85,7 @@ public class PurchasesController implements KeyListener, ActionListener{
                         obj[4] = list.get(5);
                         obj[5] = list.get(6);
                         temp.addRow(obj);
-                        views.purchases_table.setModel(model);
+                        views.purchases_table.setModel(temp);
                         cleanFieldsPurchases();
                         views.cmb_purchase_supplier.setEditable(false);
                         views.txt_purchase_product_code.requestFocus();
@@ -134,7 +134,8 @@ public class PurchasesController implements KeyListener, ActionListener{
             }
         }
     } 
-
+    
+    //Limpiar campos
     public void cleanFieldsPurchases(){
         views.txt_purchase_product_name.setText("");
         views.txt_purchase_price.setText("");
@@ -147,10 +148,11 @@ public class PurchasesController implements KeyListener, ActionListener{
     
     //calcular a pagar
     public void calculatePurchase(){
-        double total = 0.0;
+        double total = 0.00;
         int numRow = views.purchases_table.getRowCount();
         
         for(int i= 0; i < numRow; i++){
+            //Pasa el indice de la columna que se sumará
             total = total + Double.parseDouble(String.valueOf(views.purchases_table.getValueAt(i,4)));
         }
         views.txt_purchase_total_to_pay.setText("" + total);

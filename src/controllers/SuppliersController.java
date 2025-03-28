@@ -1,4 +1,3 @@
-
 package controllers;
 
 import java.awt.event.ActionEvent;
@@ -244,13 +243,15 @@ public final class SuppliersController implements ActionListener, MouseListener,
     }
     
     //Metodo para mostrar el nombre del proveedor.
-     public void getSupplierName(){
+        
+    public void getSupplierName(){
         List<Suppliers> list = supplierDao.listSuppliersQuery(views.txt_search_supplier.getText());
         for(int i = 0; i< list.size(); i++){
             int id = list.get(i).getId();
             String name= list.get(i).getName();
-            views.cmb_purchase_supplier.addItem(new DynamicCombobox(id, name));
+            views.cmb_purchase_supplier.addItem(new DynamicCombobox(id, name).toString());
         }
     }
     
+     
 }
