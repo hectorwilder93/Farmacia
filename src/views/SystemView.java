@@ -80,7 +80,8 @@ public class SystemView extends javax.swing.JFrame {
         product_section.listAllProducts();
         
         //Controlador de Compras
-        PurchasesController  purchase_section = new PurchasesController(purchase, purchaseDao, this); 
+        PurchasesController  purchase_section = new PurchasesController(purchase, purchaseDao, this);
+       
     }
     
     public String titleInterface(){

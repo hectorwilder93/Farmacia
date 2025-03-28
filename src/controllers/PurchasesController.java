@@ -1,4 +1,3 @@
-
 package controllers;
 
 import java.awt.event.ActionEvent;
@@ -57,7 +56,7 @@ public class PurchasesController implements KeyListener, ActionListener{
                     String product_name = views.txt_purchase_product_name.getText();
                     double price = Double.parseDouble(views.txt_purchase_price.getText());
                     int purchase_id = Integer.parseInt(views.txt_purchase_id.getText());
-                    String supplier_name =  views.cmb_purchase_supplier.getSelectedItem().toString();
+                    String supplier_name = views.cmb_purchase_supplier.getSelectedItem().toString();
                     
                     if(amount > 0){
                         temp = (DefaultTableModel) views.purchases_table.getModel();

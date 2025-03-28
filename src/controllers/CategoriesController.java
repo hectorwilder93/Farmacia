@@ -173,7 +173,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == views.txt_search_category) {
-            //limpiaar tabla
+            //limpiar tabla
             cleanTable();
             //Limpiar categorias
             listAllCategories();

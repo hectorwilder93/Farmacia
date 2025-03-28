@@ -249,7 +249,7 @@ public final class SuppliersController implements ActionListener, MouseListener,
         for(int i = 0; i< list.size(); i++){
             int id = list.get(i).getId();
             String name= list.get(i).getName();
-            views.cmb_purchase_supplier.addItem(new DynamicCombobox(id, name).toString());
+            views.cmb_purchase_supplier.addItem(new DynamicCombobox(id,name));
         }
     }
     
