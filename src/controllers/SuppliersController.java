@@ -55,7 +55,7 @@ public final class SuppliersController implements ActionListener, MouseListener,
                     || views.txt_supplier_email.getText().equals("")
                     || views.cmb_supplier_city.getSelectedItem().toString().equals("")) {
 
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios" + e);
             } else {
                 //Realizar inserción
                 supplier.setName(views.txt_supplier_name.getText().trim());
@@ -73,9 +73,9 @@ public final class SuppliersController implements ActionListener, MouseListener,
                     cleanFields();
                     //Listar la tabla
                     listAllSupplier();
-                    JOptionPane.showMessageDialog(null, "Proveedor registrado exitosamente");
+                    JOptionPane.showMessageDialog(null, "Proveedor registrado exitosamente" + e);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar el proveedor");
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar el proveedor" + e);
                 }
             }
         } else if (e.getSource() == views.btn_update_supplier) {

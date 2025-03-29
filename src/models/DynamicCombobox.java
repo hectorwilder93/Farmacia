@@ -4,26 +4,24 @@ package models;
 
 public class DynamicCombobox {
     private int id;
-    private String name;
-
-    public DynamicCombobox(int id, String name) {
+    private String displayText; // Nombre a mostrar
+    
+    // Constructor
+    public DynamicCombobox(int id, String displayText) {
         this.id = id;
-        this.name = name;
+        this.displayText = displayText;
     }
-
+    
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    
+    public String getDisplayText() {
+        return displayText;
     }
-
-    public String getName() {
-        return name;
+    
+    @Override
+    public String toString() {
+        return displayText; // Esto es lo que mostrará el JComboBox
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }    
 }

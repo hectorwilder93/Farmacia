@@ -12,12 +12,12 @@ public class Purchases {
     private double total;
     private String created;
     private String supplier_name_product;
-    private String purcharser;
+    private String purchases;
 
     public Purchases() {
     }
 
-    public Purchases(int id, int code, String product_name, int purchase_amount, double purchase_price, double purchase_subtotal, double total, String created, String supplier_name_product, String purcharser) {
+    public Purchases(int id, int code, String product_name, int purchase_amount, double purchase_price, double purchase_subtotal, double total, String created, String supplier_name_product, String purchases) {
         this.id = id;
         this.code = code;
         this.product_name = product_name;
@@ -27,7 +27,7 @@ public class Purchases {
         this.total = total;
         this.created = created;
         this.supplier_name_product = supplier_name_product;
-        this.purcharser = purcharser;
+        this.purchases = purchases;
     }
 
     public int getId() {
@@ -102,11 +102,11 @@ public class Purchases {
         this.supplier_name_product = supplier_name_product;
     }
 
-    public String getPurcharser() {
-        return purcharser;
+    public String getPurchases() {
+        return purchases;
     }
 
-    public void setPurcharser(String purcharser) {
-        this.purcharser = purcharser;
+    public void setPurchases(String purchases) {
+        this.purchases = purchases;
     }    
 }

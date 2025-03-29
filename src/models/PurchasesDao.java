@@ -21,8 +21,8 @@ public class PurchasesDao {
 
     //Registrar compra
     public boolean registerPurchaseQuery(int supplier_id, int employee_id, double total) {
-        String query = "INSERT INTO purchases (supplier_id, employee_id, total, created)"
-                + "VALUES (?, ?, ?,?)";
+        String query = "INSERT INTO purchases(supplier_id,employees_id,total,created)"
+                + "VALUES (?,?,?,?)";
         Timestamp datetime = new Timestamp(new Date().getTime());
 
         try {
@@ -35,7 +35,7 @@ public class PurchasesDao {
             pst.execute();
             return true;
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al insertar la compra");
+            JOptionPane.showMessageDialog(null, "Error al insertar la compra" + e);
             return false;
         }
     }
@@ -43,8 +43,8 @@ public class PurchasesDao {
     //Registrar detalles de la compra
     public boolean registerPurcahseDetailQuery(int purchase_id, double purchase_price, int purchase_amount, double purchase_subtotal, int product_id){
         
-        String query = "INSERT INTO purchases_details(purchase_id, purchase_price, purchase_amount, purchase_subtotal ,purchase_date, product_id )"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?) ";
+        String query = "INSERT INTO purchases_details(purchase_id, purchase_price, purchase_amount, purchase_subtotal, product_id )"
+                + "VALUES (?,?,?,?,?)";
             Timestamp datetime = new Timestamp (new Date().getTime());
         
         try{
@@ -54,8 +54,7 @@ public class PurchasesDao {
             pst.setDouble(2, purchase_price);
             pst.setInt(3, purchase_amount);
             pst.setDouble(4, purchase_subtotal);
-            pst.setTimestamp(5, datetime);
-            pst.setInt(6, product_id);
+            pst.setInt(5, product_id);
             pst.execute();
             return true;
         }catch(SQLException e){
@@ -67,7 +66,7 @@ public class PurchasesDao {
     //Obtener Id de la compra
     public int purchaseId(){
         int id = 0 ;
-        String query = "SELECT MAX (id) AS id FROM purchases";
+        String query = "SELECT MAX(id) AS id FROM purchases";
         try{
             conn = cn.getConnection();
             pst = conn.prepareStatement(query);
@@ -126,7 +125,7 @@ public class PurchasesDao {
             purchase.setPurchase_subtotal(rs.getDouble("purchase_subtotal"));
             purchase.setSupplier_name_product(rs.getString("supplier_name"));
             purchase.setCreated(rs.getString("created"));
-            purchase.setPurcharser(rs.getString("full_name"));
+            purchase.setPurchases(rs.getString("full_name"));
             list_purchase.add(purchase);            
         }
        }catch(SQLException e){

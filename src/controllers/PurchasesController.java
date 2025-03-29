@@ -35,6 +35,8 @@ public class PurchasesController implements KeyListener, ActionListener{
         this.views = views;
         //Botón de agregar
         this.views.btn_add_product_to_buy.addActionListener(this);
+        //Botón de comprar
+        this.views.btn_confirm_purchase.addActionListener(this);
         this.views.txt_purchase_product_code.addKeyListener(this);
         this.views.txt_purchase_price.addKeyListener(this);
         
@@ -63,6 +65,7 @@ public class PurchasesController implements KeyListener, ActionListener{
                         for(int i= 0; i < views.purchases_table.getRowCount(); i++){
                            if(views.purchases_table.getValueAt(i, 1).equals(views.txt_purchase_product_name.getText())){
                                JOptionPane.showMessageDialog(null, "El producto ya esta registrado en la tabla de compras");
+                               views.txt_purchase_product_code.requestFocus();
                                return;
                            }                
                         }
@@ -72,8 +75,8 @@ public class PurchasesController implements KeyListener, ActionListener{
                         list.add(purchase_id);
                         list.add(product_name);
                         list.add(amount);
-                        list.add(price);
-                        list.add(amount * price);
+                        list.add(price);                        
+                        list.add(amount *price);
                         list.add(supplier_name);
                         
                         Object[] obj = new Object[6];
@@ -92,6 +95,29 @@ public class PurchasesController implements KeyListener, ActionListener{
                     }
                 }
             }
+        }else if(e.getSource() == views.btn_confirm_purchase){
+            insertPurchase();
+        }
+    }
+    
+    private void insertPurchase(){
+        double total = Double.parseDouble(views.txt_purchase_total_to_pay.getText());
+        int employee_id = purchaseDao.purchaseId();
+        if(purchaseDao.registerPurchaseQuery(getIdSupplier, employee_id, total)){
+           int purchase_id = purchaseDao.purchaseId();
+           
+           for(int i=0; i<views.purchases_table.getRowCount();i++){
+               int product_id = Integer.parseInt(views.purchases_table.getValueAt(i, 0).toString());
+               int purchase_amount = Integer.parseInt(views.purchases_table.getValueAt(i, 2).toString());
+               double purchase_price = Double.parseDouble(views.purchases_table.getValueAt(i, 3).toString());
+               double purchase_subtotal = purchase_price * purchase_amount;
+               
+               //Registrar detalle de la compra
+               purchaseDao.registerPurcahseDetailQuery(purchase_id, purchase_price, purchase_amount, purchase_subtotal, product_id);
+           }
+           cleanTableTemp();
+           JOptionPane.showMessageDialog(null, "Compra generada con éxito");
+           cleanFieldsPurchases();
         }
     }
 
@@ -155,6 +181,14 @@ public class PurchasesController implements KeyListener, ActionListener{
             total = total + Double.parseDouble(String.valueOf(views.purchases_table.getValueAt(i,4)));
         }
         views.txt_purchase_total_to_pay.setText("" + total);
+    }
+    
+    //Limpiar tabla temporal
+    public void cleanTableTemp(){
+        for(int i = 0; i<temp.getRowCount();i++){
+            temp.removeRow(i);
+            i = i -1;
+        }
     }
     
 }
