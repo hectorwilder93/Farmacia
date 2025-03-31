@@ -21,7 +21,7 @@ public class CategoriesDao {
     
     //registrar categorias
     public boolean registerCategoryQuery(Categories category){
-        String query = "INSERT INTO categories (name, created, `update`) VALUES(?,?,?)";
+        String query = "INSERT INTO categories (name, created, `updated`) VALUES(?,?,?)";
         Timestamp datetime = new Timestamp(new Date().getTime());
         
         try{
@@ -69,7 +69,7 @@ public class CategoriesDao {
    
    //modificar categoria
     public boolean updateCategoryQuery(Categories category){
-        String query = "UPDATE categories SET name = ?, `update`=? WHERE id= ?";
+        String query = "UPDATE categories SET name = ?, `updated`=? WHERE id= ?";
         Timestamp datetime = new Timestamp(new Date().getTime());
         
         try{

@@ -20,16 +20,16 @@ public class PurchasesDao {
     ResultSet rs;
 
     //Registrar compra
-    public boolean registerPurchaseQuery(int supplier_id, int employee_id, double total) {
+    public boolean registerPurchaseQuery(int supplier_id, int employees_id, double total) {
         String query = "INSERT INTO purchases(supplier_id,employees_id,total,created)"
-                + "VALUES (?,?,?,?)";
+                + "VALUES(?,?,?,?)";
         Timestamp datetime = new Timestamp(new Date().getTime());
 
         try {
             conn = cn.getConnection();
             pst = conn.prepareStatement(query);
             pst.setInt(1, supplier_id);
-            pst.setInt(2, employee_id);
+            pst.setInt(2, employees_id);
             pst.setDouble(3, total);
             pst.setTimestamp(4, datetime);
             pst.execute();
@@ -41,7 +41,7 @@ public class PurchasesDao {
     }
     
     //Registrar detalles de la compra
-    public boolean registerPurcahseDetailQuery(int purchase_id, double purchase_price, int purchase_amount, double purchase_subtotal, int product_id){
+    public boolean registerPurchaseDetailQuery(int purchase_id, double purchase_price, int purchase_amount, double purchase_subtotal, int product_id){
         
         String query = "INSERT INTO purchases_details(purchase_id, purchase_price, purchase_amount, purchase_subtotal, product_id )"
                 + "VALUES (?,?,?,?,?)";

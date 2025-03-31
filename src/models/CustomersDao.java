@@ -21,7 +21,7 @@ public class CustomersDao {
     
     //registrar cliente
     public boolean registerCustomerquery(Customers customer){
-        String query = "INSERT INTO customers (id, full_name, address, telephone, email, created, `update`)"
+        String query = "INSERT INTO customers (id, full_name, address, telephone, email, created, `updated`)"
                 + "VALUES(?,?,?,?,?,?,?)";
                 
         
@@ -76,7 +76,7 @@ public class CustomersDao {
     
     //MOdificar cliente
     public boolean updateCustomerquery(Customers customer){
-        String query = "UPDATE customers SET full_name = ?,address = ?,telephone = ?,email = ?,`update` = ?"
+        String query = "UPDATE customers SET full_name = ?,address = ?,telephone = ?,email = ?,`updated` = ?"
                 +  "WHERE id = ? ";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
@@ -113,8 +113,5 @@ public class CustomersDao {
         }
     }
 
-    public boolean registerCustomerQuery(Customers customer) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
 }

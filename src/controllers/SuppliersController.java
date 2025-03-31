@@ -64,7 +64,7 @@ public final class SuppliersController implements ActionListener, MouseListener,
                 supplier.setAddress(views.txt_supplier_address.getText().trim());
                 supplier.setEmail(views.txt_supplier_email.getText().trim());
                 supplier.setCity(views.cmb_supplier_city.getSelectedItem().toString());
-                supplier.setId(Integer.parseInt(views.txt_supplier_id.getText()));
+                
 
                 if (supplierDao.registerSupplierQuery(supplier)) {
                     //Limpiar la tabla
@@ -73,20 +73,20 @@ public final class SuppliersController implements ActionListener, MouseListener,
                     cleanFields();
                     //Listar la tabla
                     listAllSupplier();
-                    JOptionPane.showMessageDialog(null, "Proveedor registrado exitosamente" + e);
+                    JOptionPane.showMessageDialog(null, "Proveedor registrado exitosamente");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar el proveedor" + e);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar el proveedor");
                 }
             }
         } else if (e.getSource() == views.btn_update_supplier) {
             if (views.txt_supplier_id.equals("")) {
-                JOptionPane.showMessageDialog(null,"Selecciona una fila para continuar");
+                JOptionPane.showMessageDialog(null,"Selecciona una fila para continuar" + e);
              }else{
                 if (views.txt_supplier_name.getText().equals("")
                         || views.txt_supplier_address.getText().equals("") 
                         || views.txt_supplier_telephone.getText().equals("")                                                                      
                         || views.txt_supplier_email.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios" + e);
                 } else {
                     supplier.setName(views.txt_supplier_name.getText().trim());
                     supplier.setDescription(views.txt_supplier_description.getText().trim());                     

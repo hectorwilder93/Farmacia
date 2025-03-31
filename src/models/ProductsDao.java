@@ -20,7 +20,7 @@ public class ProductsDao {
     
     //registrar producto
     public boolean registerProductQuery(Products product){
-        String query = "INSERT INTO products (code, name, description, unit_price, created, `update`, category_id)"
+        String query = "INSERT INTO products (code, name, description, unit_price, created, `updated`, category_id)"
                 + "VALUES(?, ?, ?, ?, ?, ?, ?)";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
@@ -77,7 +77,7 @@ public class ProductsDao {
     
     //Modificar producto
     public boolean updateProductQuery(Products product){
-        String query = "UPDATE products SET code = ?, name = ?, description = ?, unit_price = ?,`update` = ?, category_id = ? WHERE id = ?";
+        String query = "UPDATE products SET code = ?, name = ?, description = ?, unit_price = ?,`updated` = ?, category_id = ? WHERE id = ?";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
         
@@ -185,7 +185,7 @@ public class ProductsDao {
    
    //Actualizar stock
    public boolean updateStockQuery(int amount, int product_id){
-       String query = "UPDATE products SET product_quantity = ? WHERE id = ?";
+       String query = "UPDATE products SET product_quantity = ? WHERE id=?";
        try{
           conn = cn.getConnection();
           pst = conn.prepareStatement(query);
