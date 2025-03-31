@@ -10,14 +10,14 @@ public class Products {
     private double unit_price;
     private int product_quantity;
     private String created;
-    private String update;
+    private String updated;
     private int category_id;
     private String category_name;
 
     public Products() {
     }
 
-    public Products(int id, int code, String name, String description, double unit_price, int product_quantity, String created, String update, int category_id, String category_name) {
+    public Products(int id, int code, String name, String description, double unit_price, int product_quantity, String created, String updated, int category_id, String category_name) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -25,7 +25,7 @@ public class Products {
         this.unit_price = unit_price;
         this.product_quantity = product_quantity;
         this.created = created;
-        this.update = update;
+        this.updated = updated;
         this.category_id = category_id;
         this.category_name = category_name;
     }
@@ -87,11 +87,11 @@ public class Products {
     }
 
     public String getUpdate() {
-        return update;
+        return updated;
     }
 
     public void setUpdate(String update) {
-        this.update = update;
+        this.updated = updated;
     }
 
     public int getCategory_id() {

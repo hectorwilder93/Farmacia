@@ -11,12 +11,12 @@ public class Employees {
     private String password;
     private String rol;
     private String created;
-    private String update;
+    private String updated;
 
     public Employees() {
     }
 
-    public Employees(int id, String full_name, String username, String address, String telephone, String email, String password, String rol, String created, String update) {
+    public Employees(int id, String full_name, String username, String address, String telephone, String email, String password, String rol, String created, String updated) {
         this.id = id;
         this.full_name = full_name;
         this.username = username;
@@ -26,7 +26,7 @@ public class Employees {
         this.password = password;
         this.rol = rol;
         this.created = created;
-        this.update = update;
+        this.updated = updated;
     }
 
     public int getId() {
@@ -102,10 +102,10 @@ public class Employees {
     }
 
     public String getUpdate() {
-        return update;
+        return updated;
     }
 
-    public void setUpdate(String update) {
-        this.update = update;
+    public void setUpdate(String updated) {
+        this.updated = updated;
     }
 }

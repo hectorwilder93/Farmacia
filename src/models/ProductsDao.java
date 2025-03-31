@@ -77,7 +77,7 @@ public class ProductsDao {
     
     //Modificar producto
     public boolean updateProductQuery(Products product){
-        String query = "UPDATE products SET code = ?, name = ?, description = ?, unit_price = ?,`updated` = ?, category_id = ? WHERE id = ?";
+        String query = "UPDATE products SET code = ?, name = ?, description = ?, unit_price = ?,updated = ?, category_id = ? WHERE id = ?";
         
         Timestamp datetime = new Timestamp (new Date().getTime());
         
